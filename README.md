@@ -1,17 +1,29 @@
 # jupyter-code-server
-Running VSCode Web IDE inside the Jupyter environment
+
+Running VSCode Web IDE code-server inside the Jupyter environment.
+
+![JupyterLab ](./imgs/code_lab_icon.png)
+
+## Table of Contents
 
 - [jupyter-code-server](#jupyter-code-server)
+  - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
   - [Installation](#installation)
   - [Configuration](#configuration)
     - [Setting the working directory](#setting-the-working-directory)
     - [Loading `code-server` using Lmod](#loading-code-server-using-lmod)
 
 
+## Requirements
+
+* Installed version of [https://github.com/coder/code-server](https://github.com/coder/code-server)
+  * If code-server is installed via Lmod: [Loading `code-server` using Lmod](#loading-code-server-using-lmod)
+
 ## Installation
-`
+
 `python3 -m pip install jupyter-code-server`
-`
+
 ## Configuration
 
 ### Setting the working directory
@@ -26,3 +38,7 @@ The order/priority is as follows:
 
 ### Loading `code-server` using Lmod
 
+An example of loading code-server via Lmod can be found in the branch lmod_pre_start:
+[lmod_pre_start](https://github.com/mawigh/jupyter-code-server/tree/lmod_pre_start)
+
+**Important:** You might want to change the loaded code-server version.
