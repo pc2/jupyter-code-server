@@ -23,7 +23,9 @@ Running VSCode Web IDE code-server inside the Jupyter environment.
 
 ## Installation
 
-`python3 -m pip install jupyter-code-server`
+```
+python3 -m pip install jupyter-code-server
+```
 
 ## Configuration
 
