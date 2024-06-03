@@ -19,6 +19,7 @@ Running VSCode Web IDE code-server inside the Jupyter environment.
 
 * Installed version of [https://github.com/coder/code-server](https://github.com/coder/code-server)
   * If code-server is installed via Lmod: [Loading `code-server` using Lmod](#loading-code-server-using-lmod)
+* `jupyter-server-proxy>=4.1.2`
 
 ## Installation
 
