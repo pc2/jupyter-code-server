@@ -31,12 +31,12 @@ python3 -m pip install jupyter-code-server
 
 ### Setting the working directory
 
-`CODE_WORKING_DIRECTORY` is prioritised and can be changed for the VSCode Web IDE independently of the Jupyter working/notebook directory.
+The environment variable `CODE_WORKING_DIRECTORY` is prioritised and can be changed for the VSCode Web IDE independently of the Jupyter working/notebook directory.
 
 The order/priority is as follows:
-1. `CODE_WORKING_DIRECTORY`
-2. `JUPYTERHUB_ROOT_DIR`
-3. `JUPYTER_SERVER_ROOT`
+1. `CODE_WORKING_DIRECTORY`, if not set:
+2. `JUPYTERHUB_ROOT_DIR`, if not set:
+3. `JUPYTER_SERVER_ROOT`, if not set:
 4. `HOME`
 
 ### Loading `code-server` using Lmod
