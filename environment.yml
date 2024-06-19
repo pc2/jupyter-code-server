@@ -1,0 +1,9 @@
+name: jupyter-code-server
+channels:
+    - conda-forge
+dependencies:
+    - jupyter-server-proxy
+    - jupyterlab
+    - python-build
+    - code-server
+    
