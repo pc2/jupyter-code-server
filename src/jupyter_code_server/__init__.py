@@ -4,7 +4,6 @@ from tempfile import mkstemp
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 
-
 def pre_start_hook():
     """ 
     Useful for loading code-server via e.g. Lmod
@@ -22,6 +21,32 @@ def which_code_server():
 def setup_code_server():
 
     pre_start_hook()
+
+    proxy_config_dict = {
+        "new_browser_window": True,
+        "timeout": 30,
+        "launcher_entry": {"title": "VSCode Web IDE", "path_info": "vscode", "icon_path": os.path.join(_HERE, 'icons/vscode.svg')}
+        }
+
+    # if code-server is already running and listening to TCP port
+    code_server_port = os.environ.get('JSP_CODE_SERVER_PORT', None)
+    if code_server_port:
+        # set `command` be empty to avoid starting new code-server process and proxy requests to port specified
+        proxy_config_dict.update({
+            "command": [],
+            "port": int(code_server_port)
+            })
+        return proxy_config_dict
+
+    # if code-server is already running and listening to UNIX socket
+    code_server_socket = os.environ.get('JSP_CODE_SERVER_SOCKET', None)
+    if code_server_socket:
+        # set `command` be empty to avoid starting new code-server process and proxy requests to socket specified
+        proxy_config_dict.update({
+            "command": [],
+            "unix_socket": code_server_socket
+            })
+        return proxy_config_dict
 
     working_directory = os.environ.get('CODE_WORKING_DIRECTORY', None)
     if not working_directory:
@@ -41,11 +66,9 @@ def setup_code_server():
     ]
 
     full_command = [which_code_server()] + command_arguments + additional_arguments + ['--'] + [working_directory]
-
-    return {
+    proxy_config_dict.update({
         "command": full_command,
-        "unix_socket": socket_file_name,
-        "new_browser_window": True,
-        "timeout": 30,
-        "launcher_entry": {"title": "VSCode Web IDE", "path_info": "vscode", "icon_path": os.path.join(_HERE, 'icons/vscode.svg')}
-    }
+        "unix_socket": socket_file_name
+        })
+
+    return proxy_config_dict

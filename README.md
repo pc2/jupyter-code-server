@@ -47,3 +47,18 @@ An example of loading code-server via Lmod can be found in the branch lmod_pre_s
 [lmod_pre_start](https://github.com/mawigh/jupyter-code-server/tree/lmod_pre_start)
 
 **Important:** You might want to change the loaded code-server version.
+### Using pre-started code-server
+
+In case code-server is already running (e.g. started in sidecar container with Jupyter running in Kubernetes)
+and servig either via TCP port or UNIX socket, it is possible to proxy this already running instance instead
+of starting a new one with jupyter-server-proxy. Variables `JSP_CODE_SERVER_PORT` and `JSP_CODE_SERVER_SOCKET`
+set `command` to empty list which makes `jupyter-server-proxy` pass requests to specified port of socket.
+
+If running code-server is listening to TCP port, environment variable `JSP_CODE_SERVER_PORT` may be set to
+port number.
+
+If running code-server is listening to UNIX socket, environment variable `JSP_CODE_SERVER_SOCKET` may be set to
+socket file path.
+
+If none of these environment variables are set, jupyter-code-server starts new code-server process and proxies
+requests to its socket.
