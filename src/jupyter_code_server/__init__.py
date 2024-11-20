@@ -25,7 +25,13 @@ def setup_code_server():
     proxy_config_dict = {
         "new_browser_window": True,
         "timeout": 30,
-        "launcher_entry": {"title": "VSCode Web IDE", "path_info": "vscode", "icon_path": os.path.join(_HERE, 'icons/vscode.svg')}
+        "launcher_entry": {
+            # Option to disable launcher, e.g. for users that are not supposed to have editor available
+            "enabled": False if os.environ.get('JSP_CODE_SERVER_LAUNCHER_DISABLED') else True,
+            "title": "VSCode Web IDE",
+            "path_info": "vscode",
+            "icon_path": os.path.join(_HERE, 'icons/vscode.svg')
+            }
         }
 
     # if code-server is already running and listening to TCP port
