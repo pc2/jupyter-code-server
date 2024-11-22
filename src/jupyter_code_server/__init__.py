@@ -36,8 +36,6 @@ def setup_code_server():
     if code_server_module:
         pre_start_hook(code_server_module)
 
-    which_code_server()
-
     proxy_config_dict = {
         "new_browser_window": True,
         "timeout": 30,
