@@ -1,14 +1,9 @@
 from shutil import which
 import os
+from subprocess import run
 from tempfile import mkstemp
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-
-def pre_start_hook():
-    """ 
-    Useful for loading code-server via e.g. Lmod
-    """
-    pass
 
 
 def which_code_server():
@@ -18,9 +13,30 @@ def which_code_server():
     return command
 
 
+def pre_start_hook(code_server_module):
+
+    LMOD_CMD = os.environ.get('LMOD_CMD', None)
+    MODULEPATH = os.environ.get('MODULEPATH', None)
+    if not LMOD_CMD and not MODULEPATH:
+        raise EnvironmentError('Cannot initializing code-server for the jupyter-code-server proxy! Environment variable LMOD_CMD/MODULEPATH not set.')
+
+    command_to_load = (LMOD_CMD, 'python', '--terse', 'load', str(code_server_module))
+
+    subp = run(command_to_load, capture_output=True, text=True)
+    if not subp.returncode == 0:
+        raise OSError("Error executing $LMOD_CMD command to preload code-server: " + str(subp.stderr))
+
+    # execute python environment functions from the module load call
+    exec(subp.stdout)
+
+
 def setup_code_server():
 
-    pre_start_hook()
+    code_server_module = os.environ.get('JSP_CODE_SERVER_LMOD_MODULE', None)
+    if code_server_module:
+        pre_start_hook(code_server_module)
+
+    which_code_server()
 
     proxy_config_dict = {
         "new_browser_window": True,

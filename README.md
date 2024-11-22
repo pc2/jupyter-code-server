@@ -14,13 +14,15 @@ Running VSCode Web IDE code-server inside the Jupyter environment.
   - [Installation](#installation)
   - [Configuration](#configuration)
     - [Setting the working directory](#setting-the-working-directory)
-    - [Loading `code-server` using Lmod](#loading-code-server-using-lmod)
+    - [Using pre-started code-server](#using-pre-started-code-server)
+    - [Enable/disable launcher](#enabledisable-launcher)
+    - [Loading code-server using Lmod](#loading-code-server-using-lmod)
 
 
 ## Requirements
 
 * Installed version of [https://github.com/coder/code-server](https://github.com/coder/code-server)
-  * If code-server is installed via Lmod: [Loading `code-server` using Lmod](#loading-code-server-using-lmod)
+  * If code-server is installed via Lmod: [Loading code-server using Lmod](#loading-code-server-using-lmod)
 * `jupyter-server-proxy>=4.1.2`
 
 ## Installation
@@ -41,12 +43,6 @@ The order/priority is as follows:
 3. `JUPYTER_SERVER_ROOT`, if not set:
 4. `HOME`
 
-### Loading `code-server` using Lmod
-
-An example of loading code-server via Lmod can be found in the branch lmod_pre_start:
-[lmod_pre_start](https://github.com/mawigh/jupyter-code-server/tree/lmod_pre_start)
-
-**Important:** You might want to change the loaded code-server version.
 ### Using pre-started code-server
 
 In case code-server is already running (e.g. started in sidecar container with Jupyter running in Kubernetes)
@@ -64,7 +60,16 @@ If none of these environment variables are set, jupyter-code-server starts new c
 requests to its socket.
 
 ### Enable/disable launcher
+
 By default code-server launcher is enabled and visible in JupyterLab. Option `JSP_CODE_SERVER_LAUNCHER_DISABLED`
 may be set to any non-empty value to disable launcher. This is useful when e.g. certain users are not supposed
 to have code-server available in Jupyterhub as there is no easy way to disable loading of entire `jupyter-code-server`
 module for these users if module is for example built into Docker image.
+
+### Loading code-server using Lmod
+
+If code-server needs to be loaded from an Lmod environment you can set the `JSP_CODE_SERVER_LMOD_MODULE` variable to the path of the module.
+
+Example: `JSP_CODE_SERVER_LMOD_MODULE=tools/code-server/4.22.1`
+
+The module will then be loaded with the help of `LMOD_CMD` and `MODULEPATH` before the code-server is started.
