@@ -1,6 +1,6 @@
 [project]
 name = 'jupyter_code_server'
-version = '0.2'
+version = '1.1'
 description = 'Running the Visual Studio Code Web IDE inside the Jupyter environment'
 readme = 'README.md'
 requires-python = ">=3.8"
